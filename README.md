@@ -34,5 +34,5 @@ ensure you have a version of php (tested on 7.4 and higher), yt-dlp installed gl
 ### optional steps
 - delphium saves downloaded videos to the server in order for the user to be able to download it. to save storage, you'll want to setup a crontab operation to auto-delete files older than an X amount of time.
 - on my server, i use the following:
-0 0 * * * /usr/bin/find /var/www/delphium/dls -name "*" -type f -mtime +1 -exec rm -f {} \;
-- the following delete files older than a day at 12AM each day.
+- 0 0 * * * /usr/bin/find /var/www/delphium/dls -name "*" -type f -mtime +1 -exec rm -f {} \;
+- the former deletes files older than a day at 12AM each day.
