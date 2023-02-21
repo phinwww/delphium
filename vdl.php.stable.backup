@@ -15,8 +15,7 @@ foreach ($collection->getVideos() as $video) {
     if ($video->getError() !== null) {
         echo "Error downloading video: {$video->getError()}.";
     } else {
-        echo $video->getEpoch(); // Will return Phonebloks
-        // $video->getFile(); // \SplFileInfo instance of downloaded file
+        echo $video->getEpoch();
     }
 }
 
