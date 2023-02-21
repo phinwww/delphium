@@ -4,7 +4,7 @@ a simple, lightweight web client for yt-dlp that can be easily selfhosted.
 
 ## features
 - entirely php-based, no javascript necessary 
-- private: no ads, no popups, just download in one click. 
+- private: no ads, no popups, just download in one click. i don't even know your IP address or any identifying information
 - lightweight: can be ran on pretty much any device
 
 ## installation 
