@@ -1,11 +1,15 @@
-<?php require __DIR__.'/vendor/autoload.php'; $yt = new \YoutubeDl\YoutubeDl(); 
-$yt->setBinPath('/usr/local/bin/yt-dlp'); $yt->debug(function ($type, $buffer) {
-    if (\Symfony\Component\Process\Process::ERR === $type) { echo $buffer;
-    } else {
+<?php require __DIR__.'/vendor/autoload.php';
+$yt = new \YoutubeDl\YoutubeDl();
+$yt->setBinPath('/usr/local/bin/yt-dlp');
+$yt->debug(function ($type, $buffer) {
+    if (\Symfony\Component\Process\Process::ERR === $type) {
         echo $buffer;
     }
+    else {
+        echo "Delphium Menu. ";
+    }
 });
-$options = \YoutubeDl\Options::create() 
+$options = \YoutubeDl\Options::create()
     ->downloadPath(__DIR__.'/dls')
     ->output('%(epoch)s.%(ext)s')
     ->url($_POST["url"]);
@@ -18,7 +22,7 @@ foreach ($collection->getVideos() as $video) {
         echo $video->getEpoch();
     }
 }
-
+echo("<a href='https://delphium.jesus.fish/dls/".urlencode($video->getEpoch()).".".urlencode($video->getExt())."'>Didn't redirect? click here to download your file.</a>");
 header("Location: dls/".urlencode($video->getEpoch()).".".urlencode($video->getExt()));
-
+die();
 // header('Location: https://delphium.jesus.fish/dls/' . http_build_query($video->getEpoch() . '.webm');
