@@ -6,11 +6,14 @@ $yt->debug(function ($type, $buffer) {
         echo $buffer;
     }
     else {
-        echo "Delphium Menu. ";
+        echo ".";
     }
 });
 $options = \YoutubeDl\Options::create()
     ->downloadPath(__DIR__.'/dls')
+//    ->extractAudio($_POST[format])
+//    ->format('0')
+//    ->recodeVideo('mp4')
     ->output('%(epoch)s.%(ext)s')
     ->url($_POST["url"]);
 $collection = $yt->download($options); echo "Download completed\n";
@@ -23,6 +26,16 @@ foreach ($collection->getVideos() as $video) {
     }
 }
 echo("<a href='https://delphium.jesus.fish/dls/".urlencode($video->getEpoch()).".".urlencode($video->getExt())."'>Didn't redirect? click here to download your file.</a>");
+// echo($_POST[format])
 header("Location: dls/".urlencode($video->getEpoch()).".".urlencode($video->getExt()));
 die();
-// header('Location: https://delphium.jesus.fish/dls/' . http_build_query($video->getEpoch() . '.webm');
+
+
+
+
+
+
+
+
+
+
