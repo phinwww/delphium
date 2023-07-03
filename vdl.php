@@ -3,32 +3,51 @@ $yt = new \YoutubeDl\YoutubeDl();
 $yt->setBinPath('/usr/local/bin/yt-dlp');
 $yt->debug(function ($type, $buffer) {
     if (\Symfony\Component\Process\Process::ERR === $type) {
-        echo $buffer;
+        echo "";
     }
     else {
-        echo ".";
+        echo "";
     }
 });
-$options = \YoutubeDl\Options::create()
-    ->downloadPath(__DIR__.'/dls')
-//    ->extractAudio($_POST[format])
-//    ->format('0')
-//    ->recodeVideo('mp4')
-    ->output('%(epoch)s.%(ext)s')
-    ->url($_POST["url"]);
-$collection = $yt->download($options); echo "Download completed\n";
+if ($_POST['quality'] == 'max') {
+    $options = \YoutubeDl\Options::create()
+        ->downloadPath(__DIR__.'/dls')
+        ->output('%(epoch)s.%(ext)s')
+        ->url($_POST["url"]);
+//        ->format('bestvideo*+bestaudio/best');
+} else if ($_POST['quality'] == '1080') {
+    $options = \YoutubeDl\Options::create()
+        ->downloadPath(__DIR__.'/dls')
+        ->output('%(epoch)s.%(ext)s')
+        ->url($_POST["url"])
+        ->format('bestvideo[height<=1080]*+bestaudio/best[height<=1080]');
+} else if ($_POST['quality'] == '720') {
+    $options = \YoutubeDl\Options::create()
+        ->downloadPath(__DIR__.'/dls')
+        ->output('%(epoch)s.%(ext)s')
+        ->url($_POST["url"])
+        ->format('bestvideo[height<=720]*+bestaudio/best[height<=720]');
+} else if ($_POST['quality'] == '480') {
+    $options = \YoutubeDl\Options::create()
+        ->downloadPath(__DIR__.'/dls')
+        ->output('%(epoch)s.%(ext)s')
+        ->url($_POST["url"])
+        ->format('bestvideo[height<=480]*+bestaudio/best[height<=480]');
+}
+
+$collection = $yt->download($options); echo "<h2>download completed</h2>\n";
 
 foreach ($collection->getVideos() as $video) {
     if ($video->getError() !== null) {
         echo "Error downloading video: {$video->getError()}.";
     } else {
-        echo $video->getEpoch();
+	echo("<a href='https://delphium.jesus.fish/dls/".urlencode($video->getEpoch()).".".urlencode($video->getExt())."'>click here to download.</a>");
     }
 }
-echo("<a href='https://delphium.jesus.fish/dls/".urlencode($video->getEpoch()).".".urlencode($video->getExt())."'>Didn't redirect? click here to download your file.</a>");
 // echo($_POST[format])
-header("Location: dls/".urlencode($video->getEpoch()).".".urlencode($video->getExt()));
+// header("Location: dls/".urlencode($video->getEpoch()).".".urlencode($video->getExt()));
 die();
+
 
 
 
